@@ -1,0 +1,14 @@
+#summary One-This will give a high level overview of the separate components of the system.
+
+= Introduction =
+
+The components of the system are the following:
+-GPS data importer.
+-Data sanitizer
+-Map matching and assignment of user points to corresponding polylines
+-Assignment of speed to polylines
+-Route search
+
+= Details =
+
+The data importer 
