@@ -9,6 +9,10 @@ The components of the system are the following:
   * Assignment of speed to polylines
   * Route search
 
+Some additional utilities that will be provided are:
+  * A tool to create the database schema and set any initial settings
+  * A tool to export all user collected data to a KML file also including the weighted polylines (with lines colored by weight) to confirm that data import and route weighting is happening correctly
+
 = Details =
 
 The data importer will take GPX files as input and insert them into a database table storing all user generated data.  It will compare timestamps to make sure that no duplicate data can be entered into the database.
