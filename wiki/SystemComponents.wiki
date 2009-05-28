@@ -1,4 +1,4 @@
-#summary One-This will give a high level overview of the separate components of the system.
+#summary This will give a high level overview of the separate components of the system.
 
 = Introduction =
 
