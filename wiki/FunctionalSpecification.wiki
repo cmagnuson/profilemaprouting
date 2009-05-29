@@ -3,12 +3,71 @@
 
 = Introduction =
 
-Add your content here.
+Tools:
+  * profileimport
+  * weighlinks
+  * routesearch
 
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+=Data Collection=
+The data collection command line tool will be called in the following way:
+
+profileimport [flags] filename
+
+[flags]
+-s				perform sanitization/cleaning of input data (default)
+-ns				do not perform any sanitization on the input data
+-format fileformat		format of the input data (as recognized by GPSbabel - CSV, GPX, etc) (default is GPX)
+-gpsbabel-path path	path to gpsbabel executable (tries user path if flag not seen)
+-db-ip	ip			ip address of database (localhost by default)
+-dp-user user		username to login to db (default: route)
+-db-pass pass		database password (default: route)
+-cs system			coordinate system (default: WGS84)
+
+Input: (optional) command line flags and data file
+
+Output: error messages if appropriate, or no output on successful import
+
+Operation: The profileimport tool will read in user generated data, optionally sanitize it by removing data which does not appear to be actual driving data, match it to the roadway model loaded in the postgres database, and import it to the database with each segment of driving data tagged with its associated roadway.
+
+
+
+=Link Weighting=
+The link weight assignment tool will be called in the following way:
+
+weighlinks [flags]
+
+[flags]
+-method method	 simple (default), ..., additional weighting methods could be added here
+-db-ip	ip			ip address of database (localhost by default)
+-dp-user user		username to login to db (default: route)
+-db-pass pass		database password (default: route)
+
+Input: (optional) command line options.
+
+Output: error messages if appropriate, or no output on successful import
+
+Operation: The link weighting tool will assign weights to the roadway network data from the tagged user data based on the algorithm chosen.
+
+
+
+=Search=
+The route search command line tool will be called in the following way:
+
+routesearch [flags] source_longitude source_latitude destination_longitude destination_latitude
+
+[flags]
+-method method		simple (default), ..., additional weighting methods could be added here
+-db-ip	ip			ip address of database (localhost by default)
+-dp-user user		username to login to db (default: route)
+-db-pass pass		database password (default: route)
+-cs system			coordinate system (default: WGS84)
+
+Input: (optional) command line options, source and destination coordinates.
+
+Output: error messages if appropriate, on successful search the found route is output
+
+Operation: The search tool will find the nearest roadways to the start and destination coordinates and calculate an optimal route from source to destination using the given method.
