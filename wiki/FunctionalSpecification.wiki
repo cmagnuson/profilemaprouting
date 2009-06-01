@@ -12,11 +12,10 @@ Tools:
 = Details =
 
 
-=Data Collection=
+==Data Collection==
 The data collection command line tool will be called in the following way:
-
+{{{
 profileimport [flags] filename
-
 [flags]
 -s				perform sanitization/cleaning of input data (default)
 -ns				do not perform any sanitization on the input data
@@ -26,7 +25,7 @@ profileimport [flags] filename
 -dp-user user		username to login to db (default: route)
 -db-pass pass		database password (default: route)
 -cs system			coordinate system (default: WGS84)
-
+}}}
 Input: (optional) command line flags and data file
 
 Output: error messages if appropriate, or no output on successful import
@@ -34,10 +33,9 @@ Output: error messages if appropriate, or no output on successful import
 Operation: The profileimport tool will read in user generated data, optionally sanitize it by removing data which does not appear to be actual driving data, match it to the roadway model loaded in the postgres database, and import it to the database with each segment of driving data tagged with its associated roadway.
 
 
-
-=Link Weighting=
+==Link Weighting==
 The link weight assignment tool will be called in the following way:
-
+{{{
 weighlinks [flags]
 
 [flags]
@@ -45,7 +43,7 @@ weighlinks [flags]
 -db-ip	ip			ip address of database (localhost by default)
 -dp-user user		username to login to db (default: route)
 -db-pass pass		database password (default: route)
-
+}}}
 Input: (optional) command line options.
 
 Output: error messages if appropriate, or no output on successful import
@@ -53,10 +51,9 @@ Output: error messages if appropriate, or no output on successful import
 Operation: The link weighting tool will assign weights to the roadway network data from the tagged user data based on the algorithm chosen.
 
 
-
-=Search=
+==Search==
 The route search command line tool will be called in the following way:
-
+{{{
 routesearch [flags] source_longitude source_latitude destination_longitude destination_latitude
 
 [flags]
@@ -65,7 +62,7 @@ routesearch [flags] source_longitude source_latitude destination_longitude desti
 -dp-user user		username to login to db (default: route)
 -db-pass pass		database password (default: route)
 -cs system			coordinate system (default: WGS84)
-
+}}}
 Input: (optional) command line options, source and destination coordinates.
 
 Output: error messages if appropriate, on successful search the found route is output
