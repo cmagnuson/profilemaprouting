@@ -1,12 +1,18 @@
 #summary High Level Functional Spec
 #labels Phase-Design
 
+<wiki:toc max_depth="2" />
+
 = Introduction =
+
+This document will provide a description of the different tools a user will interact with and their options and behaviors.
 
 Tools:
   * profileimport
   * weighlinks
   * routesearch
+  * kmldump
+  * tablecreate
 
 
 = Details =
