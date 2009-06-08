@@ -23,14 +23,15 @@ The data collection command line tool will be called in the following way:
 {{{
 profileimport [flags] filename
 [flags]
--s				perform sanitization/cleaning of input data (default)
--ns				do not perform any sanitization on the input data
--format fileformat		format of the input data (as recognized by GPSbabel - CSV, GPX, etc) (default is GPX)
--gpsbabel-path path	path to gpsbabel executable (tries user path if flag not seen)
--db-ip	ip			ip address of database (localhost by default)
--dp-user user		username to login to db (default: route)
--db-pass pass		database password (default: route)
--cs system			coordinate system (default: WGS84)
+--s				perform sanitization/cleaning of input data (default)
+--ns				do not perform any sanitization on the input data
+--format fileformat		format of the input data (as recognized by GPSbabel - CSV, GPX, etc) (default is GPX)
+--gpsbabel_path path	path to gpsbabel executable (tries user path if flag not seen)
+--db_ip	ip			ip address of database (localhost by default)
+--dp_user user		username to login to db (default: route)
+--db_pass pass		database password (default: route)
+--db_name name        database name (default: osm)
+--cs system			coordinate system (default: WGS84)
 }}}
 Input: (optional) command line flags and data file
 
@@ -45,10 +46,11 @@ The link weight assignment tool will be called in the following way:
 weighlinks [flags]
 
 [flags]
--method method	 simple (default), ..., additional weighting methods could be added here
--db-ip	ip			ip address of database (localhost by default)
--dp-user user		username to login to db (default: route)
--db-pass pass		database password (default: route)
+--method method	 simple (default), ..., additional weighting methods could be added here
+--db_ip	ip			ip address of database (localhost by default)
+--dp_user user		username to login to db (default: route)
+--db_pass pass		database password (default: route)
+--db_name name        database name (default: osm)
 }}}
 Input: (optional) command line options.
 
@@ -64,10 +66,11 @@ routesearch [flags] source_longitude source_latitude destination_longitude desti
 
 [flags]
 -strategy strategy	shortesttime (default), additional strategies could be added to say avoid right turns or prefer parkways
--db-ip	ip			ip address of database (localhost by default)
--dp-user user		username to login to db (default: route)
--db-pass pass		database password (default: route)
--cs system			coordinate system (default: WGS84)
+--db_ip	ip			ip address of database (localhost by default)
+--dp_user user		username to login to db (default: route)
+--db_pass pass		database password (default: route)
+--db_name name        database name (default: osm)
+--cs system			coordinate system (default: WGS84)
 }}}
 Input: (optional) command line options, source and destination coordinates.
 
@@ -82,9 +85,10 @@ The KML export utility will be called in the following way
 kmldump [flags] outputfile
 
 [flags]
--db-ip	ip			ip address of database (localhost by default)
--dp-user user		username to login to db (default: route)
--db-pass pass		database password (default: route)
+--db_ip	ip			ip address of database (localhost by default)
+--dp_user user		username to login to db (default: route)
+--db_pass pass		database password (default: route)
+--db_name name        database name (default: osm)
 }}}
 Input: (optional) command line options, output filename.
 
@@ -99,9 +103,10 @@ The table creation utility will be called in the following way
 tablecreate [flags]
 
 [flags]
--db-ip	ip			ip address of database (localhost by default)
--dp-user user		username to login to db (default: route)
--db-pass pass		database password (default: route)
+--db_ip	ip			ip address of database (localhost by default)
+--dp_user user		username to login to db (default: route)
+--db_pass pass		database password (default: route)
+--db_name name        database name (default: osm)
 }}}
 Input: (optional) command line options.
 
