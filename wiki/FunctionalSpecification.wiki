@@ -32,6 +32,7 @@ profileimport [flags] filename
 --db_pass pass		database password (default: route)
 --db_name name        database name (default: osm)
 --cs system			coordinate system (default: WGS84)
+--verbose                     verbose output
 }}}
 Input: (optional) command line flags and data file
 
@@ -51,6 +52,7 @@ weighlinks [flags]
 --dp_user user		username to login to db (default: route)
 --db_pass pass		database password (default: route)
 --db_name name        database name (default: osm)
+--verbose                     verbose output
 }}}
 Input: (optional) command line options.
 
@@ -71,6 +73,7 @@ routesearch [flags] source_longitude source_latitude destination_longitude desti
 --db_pass pass		database password (default: route)
 --db_name name        database name (default: osm)
 --cs system			coordinate system (default: WGS84)
+--verbose                     verbose output
 }}}
 Input: (optional) command line options, source and destination coordinates.
 
@@ -89,6 +92,7 @@ kmldump [flags] outputfile
 --dp_user user		username to login to db (default: route)
 --db_pass pass		database password (default: route)
 --db_name name        database name (default: osm)
+--verbose                     verbose output
 }}}
 Input: (optional) command line options, output filename.
 
@@ -107,6 +111,7 @@ tablecreate [flags]
 --dp_user user		username to login to db (default: route)
 --db_pass pass		database password (default: route)
 --db_name name        database name (default: osm)
+--verbose                     verbose output
 }}}
 Input: (optional) command line options.
 
