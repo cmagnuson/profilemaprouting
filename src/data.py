@@ -56,7 +56,6 @@ class Segment:
         altitude = parts[5]
         point = SegmentPoint(lat,lon,time,speed,course,altitude)
         self.add_point(point)
-        #point = SegmentPoint()
         
     def __init__(self):
         self.points = []
