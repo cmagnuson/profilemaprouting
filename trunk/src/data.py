@@ -39,8 +39,17 @@ class Segment:
     
     def add_point_string(self, input):
         parts = input.split()
-        lat = parts[1].strip("NSEW")
-        lon = parts[2].strip("NSEW")
+        
+        if parts[1].startswith("N"):
+            lat = float(parts[1].strip("N"))
+        else:
+            lat = 0 - float(parts[1].strip("S"))
+         
+        if parts[2].startswith("E"):
+            lon = float(parts[2].strip("E"))
+        else:
+            lon = 0 - float(parts[2].strip("W"))
+
         time = parts[3]+" "+parts[4]
         speed = parts[12]
         course = parts[14][:len(parts[14])-1]
