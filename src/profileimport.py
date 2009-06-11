@@ -41,6 +41,7 @@ def main():
     cleaned_input_file = open(file+FILE_EXTENSION,"r")
     cleaned_input = (cleaned_input_file.read()).splitlines()
     cleaned_input_file.close()
+    #TODO: fix so this actualy removes the file we created
     os.remove(file+FILE_EXTENSION)
 
     #parse input file to py 
@@ -62,7 +63,7 @@ def main():
     db = postgresql.open("pq://"+options.db_user+":"+options.db_pass+"@"+
                          options.db_ip+"/"+options.db_name)
     db.connect()
-    addpt = db.prepare("INSERT INTO userdata VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)")
+    addpt = db.prepare("INSERT INTO userdata VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)")
     setgeom = db.prepare("""UPDATE userdata SET geom=geomfromtext('POINT(' || lon || ' ' || lat || ')', 4326) 
         WHERE geom IS NULL""")
     transaction = db.xact()
@@ -80,7 +81,7 @@ def main():
         pointid=1
         for pt in segment.get_points():
             addpt(trackid, pointid, pt.lon, pt.lat, pt.time, pt.speed, pt.course, pt.altitude,
-                   None)
+                  None,pt.distance,None)
             pointid+=1
             
     setgeom()
