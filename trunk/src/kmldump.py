@@ -25,7 +25,8 @@ def main():
     kmlfile = open(arguments[0],"w")
     kmlfile.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
     kmlfile.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n")
-    kmlfile.write("<Folder>")
+    kmlfile.write("<Folder>\n")
+    kmlfile.write("<Style id=\"trkStyle\"><LineStyle><color>ffff0000</color><width>4</width></LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style>\n")
 
 
     #TODO: move db code to separate module
@@ -46,6 +47,7 @@ def main():
                 kmlfile.write("</coordinates>\n</LineString>\n</Placemark>\n")
             trackid = pt[0]
             kmlfile.write("<Placemark>\n")
+            kmlfile.write("<styleUrl>#trkStyle</styleUrl>\n")
             kmlfile.write("<name>Track: "+str(trackid)+"</name>\n")
             kmlfile.write("<LineString>\n<coordinates>\n")
         kmlfile.write(str(pt[2])+","+str(pt[3])+","+str(pt[7])+"\n")
