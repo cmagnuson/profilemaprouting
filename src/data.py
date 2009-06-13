@@ -16,8 +16,7 @@ class SegmentPoint:
     altitude = 0.0
     distance = 0.0
 
-
-    def __init__(self, lat, lon, time, speed, course, altitude, distance):
+    def setup(self, lat, lon, time, speed, course, altitude, distance):
         self.lat = float(lat)
         self.lon = float(lon)
         d = datetime.datetime
@@ -27,19 +26,7 @@ class SegmentPoint:
         self.altitude = int(altitude)
         self.distance = float(distance)
         
-class Segment:
-    points = []
-
-    def add_point(self, point):
-        self.points.append(point)
-        
-    def get_points(self):
-        return self.points
-    
-    def get_num_points(self):
-        return len(self.points)
-    
-    def add_point_string(self, input):
+    def __init__(self, input):
         parts = input.split()
         
         if parts[1].startswith("N"):
@@ -57,8 +44,19 @@ class Segment:
         course = parts[14][:len(parts[14])-1]
         altitude = parts[5]
         distance = parts[9]
-        point = SegmentPoint(lat,lon,time,speed,course,altitude,distance)
-        self.add_point(point)
+        self.setup(lat,lon,time,speed,course,altitude,distance)
+        
+class Segment:
+    points = []
+
+    def add_point(self, point):
+        self.points.append(point)
+        
+    def get_points(self):
+        return self.points
+    
+    def get_num_points(self):
+        return len(self.points)
         
     def __init__(self):
         self.points = []
