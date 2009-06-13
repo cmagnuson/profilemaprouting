@@ -31,7 +31,6 @@ profileimport [flags] filename
 --dp_user user		username to login to db (default: route)
 --db_pass pass		database password (default: route)
 --db_name name        database name (default: osm)
---cs system			coordinate system (default: WGS84)
 --verbose                     verbose output
 }}}
 Input: (optional) command line flags and data file
