@@ -40,6 +40,8 @@ def main():
     if len(points)==0:
         sys.exit()
 
+    #TODO: have this break linestrings into smaller ones - each with only one road segment associated with it
+    #TODO: create a folder or other storage item to keep each track log in, add date/time information to each folder
     trackid = 0    
     for pt in points:
         if pt[0]>trackid:
