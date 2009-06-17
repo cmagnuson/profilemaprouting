@@ -104,6 +104,14 @@ def main():
     
     if options.verbose:
         print("All segments committed to database")
+
+
+    #assign matching roadways to unassigned segments
+    ps = db.prepare("UPDATE userdata SET gid=find_nearest_link_within_distance(AsText(geom), 0.05, 'ways') WHERE gid IS NULL")
+    ps()
+    
+    if options.verbose:
+        print("Segments matched to road network data")
     
 if __name__ == '__main__':
     main()
