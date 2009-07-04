@@ -170,7 +170,7 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     #TODO: add weighting for topology
     #TODO: add weighting for shortest distance (W7)
     
-    #Find maximum weighted road (with non-negative weight) and assign in db to this data    
+    #Find maximum weighted road (with non-negative weight) and assign in db to this data     
     max_weight = 0
     max_road = None
     row = 0
