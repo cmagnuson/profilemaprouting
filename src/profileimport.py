@@ -84,9 +84,13 @@ def main():
     transaction = db.xact()
     
     #insert each segment to db
+    ps = db.prepare("SELECT MAX(trackid) FROM userdata")
+    init_trackid = ps()
+    if init_trackid[0]==(None,):
+        init_trackid=1
+        
     transaction.start()
     for segment in segment_list:
-        ps = db.prepare("SELECT MAX(trackid) FROM userdata")
         trackid = ps()
         if trackid[0]==(None,):
             trackid=1
@@ -97,7 +101,9 @@ def main():
         for pt in segment.get_points():
             addpt(trackid, pointid, pt.lon, pt.lat, pt.time, pt.speed, pt.course, pt.altitude,
                   None,pt.distance,None)
+            setgeom()
             pointid+=1
+            prev_pt = pt
             
     setgeom()
     transaction.commit()
@@ -107,11 +113,77 @@ def main():
 
 
     #assign matching roadways to unassigned segments
-    ps = db.prepare("UPDATE userdata SET gid=find_nearest_link_within_distance(AsText(geom), 0.05, 'ways') WHERE gid IS NULL")
-    ps()
+    #ORIGINAL MATCHING METHOD
+    #ps = db.prepare("UPDATE userdata SET gid=find_nearest_link_within_distance(AsText(geom), 0.05, 'ways') WHERE gid IS NULL")
+    #ps()
+    pointid=1
+    trackid=init_trackid
+    prev_pt = None
+    prev_rd = None
+    for pt in segment.get_points():
+        road = match_with_history(pt, prev_pt, prev_rd, pointid, trackid, db)
+        prev_rd = road
+        pointid+=1
+        prev_pt = pt
     
     if options.verbose:
         print("Segments matched to road network data")
     
+
+#derived from map matching method used in:
+#"Map matching for intelligent speed adaptation", 
+#IET Intelligent Transport Systems
+#N. Tradisauskas, J. Juhl, H. Lahrmann, C.S. Jensen
+#www.ietdl.org    
+def match_with_history(point, previous_point, previous_roadway, pointid, trackid, db):
+    parmaxdi = .0001
+    parnuldi = .0008
+    parcmaxdi = .001
+    multiplier = 100000
+    
+    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom) AS distance 
+    FROM userdata, ways 
+    WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 
+    ORDER BY distance ASC""")
+    results = match(trackid, pointid, parcmaxdi*2)
+
+    weight = []
+    for rd in results:
+        if rd[1]<parmaxdi:
+            weight.append((parcmaxdi + (parmaxdi - rd[1])/2)*multiplier)
+        elif rd[1]<parnuldi:
+            aa = parcmaxdi*100/(parmaxdi-parnuldi)
+            kk = parcmaxdi - aa*parmaxdi/100
+            weight.append((kk+aa*rd[1])*multiplier)
+        else:
+            weight.append(0)
+    
+    row = 0
+    for rd in results:
+        if rd[0]==previous_roadway:
+            weight[row]+=30
+        #TODO: check if close to intersection, add 10 to weight in this case
+        row+=1
+    
+    #TODO: add weighting for speed limit change
+    #TODO: add weighting for one way streets
+    #TODO: add weighting for topology
+    #TODO: add weighting for shortest distance (W7)
+    
+    #Find maximum weighted road (with non-negative weight) and assign in db to this data    
+    max_weight = 0
+    max_road = None
+    row = 0
+    for rd in results:
+        if weight[row]>max_weight:
+            max_weight = weight[row]
+            max_road = rd
+        row+=1
+
+    setgid = db.prepare("UPDATE userdata SET gid=$1 WHERE trackid=$2 AND pointid=$3")
+    if max_road!=None:
+        setgid(max_road[0], trackid, pointid)
+    return max_road
+
 if __name__ == '__main__':
     main()
