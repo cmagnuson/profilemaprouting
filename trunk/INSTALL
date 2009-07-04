@@ -1,0 +1,12 @@
+INSTALLATION GUIDE:
+
+Requirements:
+-OSM dataset loaded into PostGIS using osm2pgrouting utility
+-Python 3.0+
+-py-postgresql driver
+
+Installation/Usage:
+Each tool details all available options by calling it with the -h or --help flag.
+The typical usage would be to alter your OSM database with the tablecreate utility, then use the profileimport utility to
+load your GPS data into the system, confirm it looks correct with the kmldump utility, and then run queries on the data 
+using (UTILITIES YET TO BE DESIGNED).
