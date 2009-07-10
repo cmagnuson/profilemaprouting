@@ -141,14 +141,17 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     parcmaxdi = .001
     multiplier = 100000
     
-    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom) AS distance 
-    FROM userdata, ways 
+    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom) AS distance, LEAST(distance(ways.the_geom, geomfromtext('POINT(' || n1.lon || ' ' || n1.lat || ')', 4326)), distance(ways.the_geom, geomfromtext('POINT(' || n2.lon || ' ' || n2.lat || ')', 4326))) AS to_intersection 
+    FROM userdata, ways, nodes n1, nodes n2 
     WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 
+    AND ways.source=n1.id AND ways.target=n2.id 
     ORDER BY distance ASC""")
     results = match(trackid, pointid, parcmaxdi*2)
 
     weight = []
+    print(results)
     for rd in results:
+        #print(rd)
         if rd[1]<parmaxdi:
             weight.append((parcmaxdi + (parmaxdi - rd[1])/2)*multiplier)
         elif rd[1]<parnuldi:

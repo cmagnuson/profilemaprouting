@@ -6,6 +6,7 @@ Created on Jun 9, 2009
 
 import datetime
 
+#a single point of driving data - constituting one moment in time and place
 class SegmentPoint:
 
     lat = 0.0
@@ -16,6 +17,7 @@ class SegmentPoint:
     altitude = 0.0
     distance = 0.0
 
+    #method to set initial values, time taken in a string in the format GPSBabel produces
     def setup(self, lat, lon, time, speed, course, altitude, distance):
         self.lat = float(lat)
         self.lon = float(lon)
@@ -26,6 +28,7 @@ class SegmentPoint:
         self.altitude = int(altitude)
         self.distance = float(distance)
         
+    #constructor to build segmentpoint from input string from GPSBabel output
     def __init__(self, input):
         parts = input.split()
         
@@ -45,10 +48,12 @@ class SegmentPoint:
         altitude = parts[5]
         distance = parts[9]
         self.setup(lat,lon,time,speed,course,altitude,distance)
-        
+
+#constitutes a group of points recorded during one drive        
 class Segment:
     points = []
 
+    #appends a point to the end of this collection of points
     def add_point(self, point):
         self.points.append(point)
         

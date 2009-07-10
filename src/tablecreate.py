@@ -45,7 +45,6 @@ CREATE TABLE "userdata" (
     "gid" int4 DEFAULT NULL
 )
 WITH (OIDS=FALSE);
-ALTER TABLE "userdata" OWNER TO "routing";
 
 -- ----------------------------
 --  Uniques structure for table "userdata"
