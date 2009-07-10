@@ -5,6 +5,7 @@ Requirements:
 -Python 3.0+
 -py-postgresql driver
 -pgrouting
+-gpsbabel
 
 Installation/Usage:
 Each tool details all available options by calling it with the -h or --help flag.
