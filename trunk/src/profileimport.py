@@ -136,27 +136,26 @@ def main():
 #N. Tradisauskas, J. Juhl, H. Lahrmann, C.S. Jensen
 #www.ietdl.org    
 def match_with_history(point, previous_point, previous_roadway, pointid, trackid, db):
-    parmaxdi = .0001
-    parnuldi = .0008
-    parcmaxdi = .001
+    parmaxdi = 10 #.0001
+    parnuldi = 80 #.0008
+    parcmaxdi = 100 #.001
     multiplier = 100000
     
-    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom) AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326))) AS to_intersection 
+    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom)*"""+str(multiplier)+""" AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326)))*"""+str(multiplier)+""" AS to_intersection 
     FROM userdata, ways 
     WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 
     ORDER BY distance ASC""")
-    results = match(trackid, pointid, parcmaxdi*2)
+    results = match(trackid, pointid, parcmaxdi*2/multiplier)
 
     weight = []
-    #print(results)
     for rd in results:
-        #print(rd)
         if rd[1]<parmaxdi:
-            weight.append((parcmaxdi + (parmaxdi - rd[1])/2)*multiplier)
+            weight.append((parcmaxdi + (parmaxdi - rd[1])/2))
         elif rd[1]<parnuldi:
-            aa = parcmaxdi*100/(parmaxdi-parnuldi)
-            kk = parcmaxdi - aa*parmaxdi/100
-            weight.append((kk+aa*rd[1])*multiplier)
+            #aa = parcmaxdi*100/(parmaxdi-parnuldi)  #-142  #500         #50     #DIFF = parcmaxdi-parcnuldi/dist-parcnuldi
+            #kk = parcmaxdi - aa*parmaxdi/100        #100 + 142*10/100=114
+            #weight.append((kk+aa*rd[1]))            #114 + -142*rd
+            weight.append(100*((parnuldi-parmaxdi)-(rd[1]-parmaxdi))/(parnuldi-parmaxdi))   #70/70... 70/60... 100*(70-dist)/70
         else:
             weight.append(0)
     
@@ -177,7 +176,7 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     max_weight = 0
     max_road = None
     row = 0
-    print(weight)
+    print(str(weight)+" "+str(results))
     for rd in results:
         if weight[row]>max_weight:
             max_weight = weight[row]
