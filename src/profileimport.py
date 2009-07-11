@@ -141,15 +141,14 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     parcmaxdi = .001
     multiplier = 100000
     
-    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom) AS distance, LEAST(distance(ways.the_geom, geomfromtext('POINT(' || n1.lon || ' ' || n1.lat || ')', 4326)), distance(ways.the_geom, geomfromtext('POINT(' || n2.lon || ' ' || n2.lat || ')', 4326))) AS to_intersection 
-    FROM userdata, ways, nodes n1, nodes n2 
+    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom) AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326))) AS to_intersection 
+    FROM userdata, ways 
     WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 
-    AND ways.source=n1.id AND ways.target=n2.id 
     ORDER BY distance ASC""")
     results = match(trackid, pointid, parcmaxdi*2)
 
     weight = []
-    print(results)
+    #print(results)
     for rd in results:
         #print(rd)
         if rd[1]<parmaxdi:
@@ -163,9 +162,10 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     
     row = 0
     for rd in results:
-        if rd[0]==previous_roadway:
+        if rd[0]==previous_roadway: #for continuity of same roadway
             weight[row]+=30
-        #TODO: check if close to intersection, add 10 to weight in this case
+        elif rd[2]<(parmaxdi*2): #if nearby intersection
+            weight[row]+=10
         row+=1
     
     #TODO: add weighting for speed limit change
@@ -177,6 +177,7 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     max_weight = 0
     max_road = None
     row = 0
+    print(weight)
     for rd in results:
         if weight[row]>max_weight:
             max_weight = weight[row]
