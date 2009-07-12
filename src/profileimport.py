@@ -120,9 +120,15 @@ def main():
     trackid=init_trackid
     prev_pt = None
     prev_rd = None
+    prev_class = None
     for pt in segment.get_points():
-        road = match_with_history(pt, prev_pt, prev_rd, pointid, trackid, db)
-        prev_rd = road
+        res = match_with_history(pt, prev_pt, prev_rd, prev_class, pointid, trackid, db)
+        if res==None:
+            prev_rd = None
+            prev_class = None
+        else:
+            prev_rd = res[0]
+            prev_class = res[3]
         pointid+=1
         prev_pt = pt
     
@@ -135,13 +141,13 @@ def main():
 #IET Intelligent Transport Systems
 #N. Tradisauskas, J. Juhl, H. Lahrmann, C.S. Jensen
 #www.ietdl.org    
-def match_with_history(point, previous_point, previous_roadway, pointid, trackid, db):
+def match_with_history(point, previous_point, previous_roadway, previous_class, pointid, trackid, db):
     parmaxdi = 10 #.0001
     parnuldi = 80 #.0008
     parcmaxdi = 100 #.001
     multiplier = 100000
     
-    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom)*"""+str(multiplier)+""" AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326)))*"""+str(multiplier)+""" AS to_intersection 
+    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom)*"""+str(multiplier)+""" AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326)))*"""+str(multiplier)+""" AS to_intersection, class_id, (reverse_cost<>length) AS one_way, ST_azimuth(geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326), geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326)) AS heading 
     FROM userdata, ways 
     WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 
     ORDER BY distance ASC""")
@@ -165,10 +171,28 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
             weight[row]+=30
         elif rd[2]<(parmaxdi*2): #if nearby intersection
             weight[row]+=10
+            
+        #weighting for speed and road classification change
+        if rd[3]==previous_class:
+            if point.speed>55:
+                weight[row]+=20+20*point.speed/55
+            else:
+                k = 20*point.speed/50
+                if k>20:
+                    k=20
+                weight[row]+=20+k
+                
+        #weighting for one way streets
+        if rd[4]==True:  #is a one way street
+            if abs(point.course-rd[5])>85 and point.speed>2:  #not driving close to same heading as one way
+                weight[row]-=100
+        
+        #weighting for direction similarity
+        if point.speed>2:  #do not use direction data if car might be stationary with gps direction floating
+            weight[row]+=150*(90-(abs(point.course-rd[5])%90))/90
+            
         row+=1
     
-    #TODO: add weighting for speed limit change
-    #TODO: add weighting for one way streets
     #TODO: add weighting for topology
     #TODO: add weighting for shortest distance (W7)
     
@@ -176,7 +200,7 @@ def match_with_history(point, previous_point, previous_roadway, pointid, trackid
     max_weight = 0
     max_road = None
     row = 0
-    print(str(weight)+" "+str(results))
+    #print(str(weight)+" "+str(results))
     for rd in results:
         if weight[row]>max_weight:
             max_weight = weight[row]
