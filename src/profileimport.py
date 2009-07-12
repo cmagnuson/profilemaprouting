@@ -111,7 +111,7 @@ def main():
     if options.verbose:
         print("All segments committed to database")
 
-
+    #TODO: just match newly inserted data
     #assign matching roadways to unassigned segments
     #ORIGINAL MATCHING METHOD
     #ps = db.prepare("UPDATE userdata SET gid=find_nearest_link_within_distance(AsText(geom), 0.05, 'ways') WHERE gid IS NULL")
@@ -147,12 +147,15 @@ def match_with_history(point, previous_point, previous_roadway, previous_class, 
     parcmaxdi = 100 #.001
     multiplier = 100000
     
-    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom)*"""+str(multiplier)+""" AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326)))*"""+str(multiplier)+""" AS to_intersection, class_id, (reverse_cost<>length) AS one_way, ST_azimuth(geomfromtext('POINT(' || x1 || ' ' || y1 || ')', 4326), geomfromtext('POINT(' || x2 || ' ' || y2 || ')', 4326)) AS heading 
-    FROM userdata, ways 
-    WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 
+    match = db.prepare("""SELECT ways.gid, distance(userdata.geom, ways.the_geom)*"""+str(multiplier)+""" AS distance, LEAST(distance(userdata.geom, geomfromtext('POINT(' || ways.x1 || ' ' || ways.y1 || ')', 4326)), distance(userdata.geom, geomfromtext('POINT(' || ways.x2 || ' ' || ways.y2 || ')', 4326)))*"""+str(multiplier)+""" AS to_intersection, ways.class_id, (ways.reverse_cost<>ways.length) AS one_way, ST_azimuth(geomfromtext('POINT(' || ways.x1 || ' ' || ways.y1 || ')', 4326), geomfromtext('POINT(' || ways.x2 || ' ' || ways.y2 || ')', 4326)) AS heading, (ways.source=w2.source OR ways.target=w2.target OR ways.source=w2.target OR ways.target=w2.source) AS cont_roadway 
+    FROM userdata, ways, ways w2 
+    WHERE userdata.trackid=$1 AND userdata.pointid=$2 AND expand(userdata.geom, $3) && ways.the_geom AND distance(userdata.geom, ways.the_geom) <= $3 AND w2.gid=$4
     ORDER BY distance ASC""")
-    results = match(trackid, pointid, parcmaxdi*2/multiplier)
-
+    if previous_roadway==None:
+        results = match(trackid, pointid, parcmaxdi*2/multiplier, 1)
+    else:
+        results = match(trackid, pointid, parcmaxdi*2/multiplier, previous_roadway)
+        
     weight = []
     for rd in results:
         if rd[1]<parmaxdi:
@@ -191,9 +194,12 @@ def match_with_history(point, previous_point, previous_roadway, previous_class, 
         if point.speed>2:  #do not use direction data if car might be stationary with gps direction floating
             weight[row]+=150*(90-(abs(point.course-rd[5])%90))/90
             
+        #weighting for topology
+        if rd[6]==True:
+            weight[row]+=150*50/100 #TODO: adjust this based on measurement certinity... if possible
+
         row+=1
     
-    #TODO: add weighting for topology
     #TODO: add weighting for shortest distance (W7)
     
     #Find maximum weighted road (with non-negative weight) and assign in db to this data     
