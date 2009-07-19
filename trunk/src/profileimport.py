@@ -111,11 +111,7 @@ def main():
     if options.verbose:
         print("All segments committed to database")
 
-    #TODO: just match newly inserted data
     #assign matching roadways to unassigned segments
-    #ORIGINAL MATCHING METHOD
-    #ps = db.prepare("UPDATE userdata SET gid=find_nearest_link_within_distance(AsText(geom), 0.05, 'ways') WHERE gid IS NULL")
-    #ps()
     pointid=1
     trackid=init_trackid
     prev_pt = None
