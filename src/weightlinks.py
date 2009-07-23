@@ -31,8 +31,8 @@ def main():
 
     #TODO: default speeds for roadways based on classification
     #default_weights = db.prepare("....)
-    simple_weight = db.prepare("""UPDATE ways SET to_cost=spavg.sp*length FROM (SELECT AVG(speed) AS sp, gid AS g FROM userdata WHERE gid IS NOT NULL GROUP BY gid) AS spavg
- WHERE gid=spavg.g""")
+    simple_weight = db.prepare("""UPDATE ways SET to_cost=spavg.sp*length FROM (SELECT AVG(speed) AS sp, COUNT(gid) AS cnt, gid AS g FROM userdata WHERE gid IS NOT NULL GROUP BY gid) AS spavg
+ WHERE gid=spavg.g AND spavg.cnt>10""")
 
     simple_weight()
    
