@@ -38,7 +38,7 @@ def main():
                          options.db_ip+"/"+options.db_name)
     db.connect()
     
-    search = db.prepare("""SELECT gid, AsText(the_geom) AS the_geom FROM dijkstra_sp_delta('ways', $1, $2, 0.1)""")
+    search = db.prepare("""SELECT gid, ST_AsKML(the_geom) AS the_geom, AsText(the_geom) FROM dijkstra_sp_delta('ways', $1, $2, 0.1)""")
     get_gid = db.prepare("""SELECT find_nearest_link_within_distance(AsText(setsrid(makepoint($1,$2),4326)), .1, 'ways')""")
     get_node = db.prepare("""SELECT source FROM ways WHERE gid=$1""")
     
@@ -51,6 +51,21 @@ def main():
 
     route = search(src[0][0], dst[0][0])
     print(route)
+    
+    kmlfile = open("search.kml","w")
+    kmlfile.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+    kmlfile.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n")
+    kmlfile.write("<Folder>\n")
+    kmlfile.write("<Style id=\"trkStyle\"><LineStyle><color>ffff0000</color><width>4</width></LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style>\n")
+
+    for link in route:
+        kmlfile.write("<Placemark>\n")
+        kmlfile.write(link[1])
+        kmlfile.write("\n</Placemark>\n")
+        
+    kmlfile.write("</Folder>\n</kml>\n")
+    kmlfile.close()
+
     
 
 if __name__ == '__main__':
