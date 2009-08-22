@@ -24,6 +24,7 @@ def main():
     p.add_option('--gpsbabel_path', default=None)
     p.add_option('--no-sanitize', '--ns', action="store_false", dest="sanitize", default=True)
     p.add_option('--sanitize', '-s', action="store_true", dest="sanitize", default=True)
+    p.add_option('--clean', '-c', action="store_true", default=False)
     p.add_option('--verbose', '-v', action="store_true", default=False)
     options, arguments = p.parse_args()
 
@@ -73,8 +74,8 @@ def main():
         print(str(len(segment_list))+" segments processed")
         
     #TODO: move db code to separate module
-    #connect to database and prepare statements
     #TODO: more informative error code for say wrong db, username, duplicated tracks, etc
+    #connect to database and prepare statements
     db = postgresql.open("pq://"+options.db_user+":"+options.db_pass+"@"+
                          options.db_ip+"/"+options.db_name)
     db.connect()
@@ -82,6 +83,13 @@ def main():
     setgeom = db.prepare("""UPDATE userdata SET geom=geomfromtext('POINT(' || lon || ' ' || lat || ')', 4326) 
         WHERE geom IS NULL""")
     transaction = db.xact()
+
+    #clear table if clean option is given
+    if options.clean:
+        clean = db.prepare("DELETE FROM userdata")
+        clean()
+        if options.verbose:
+            print("User data cleared from DB")
     
     #insert each segment to db
     ps = db.prepare("SELECT MAX(trackid) FROM userdata")
