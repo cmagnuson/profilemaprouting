@@ -3,9 +3,9 @@
 = Routing with no user data: =
 
 Example 1:
-http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=
-115603110553644919844.000471c2bbcaec0306b80
+<a href="http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=115603110553644919844.000471c2bbcaec0306b80">Map</a>
 
+{{{
 Road | Cumulative Distance | Cumulative Time
 5th St SE | 0.0295254641056 | 0.0708611138535
 15th Ave SE | 0.114330482481 | 0.274393157956
@@ -25,7 +25,7 @@ University Ave SE | 1.55835290696 | 3.18979101255
 University Ave SE | 1.68306768187 | 3.48910647231
 University Ave SE | 1.80682032092 | 3.78611280605
 St Marys Ave SE | 1.88254621924 | 3.96785496202
-
+}}}
 
 Example 2:
 http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=
