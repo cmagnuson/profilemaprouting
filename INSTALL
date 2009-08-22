@@ -8,7 +8,14 @@ Requirements:
 -gpsbabel
 
 Installation/Usage:
+To use the program you will need a database with the pgrouting routing and matching functions installed.
+This database must also have an OSM dataset loaded using the osm2pgrouting utility. The datasets available on cloudmade have 
+had some issues importing but an export from the OSM website or using osmosis should load without issue.
+The pgrouting website has good setup directions to complete these steps.
+
 Each tool details all available options by calling it with the -h or --help flag.
 The typical usage would be to alter your OSM database with the tablecreate utility, then use the profileimport utility to
 load your GPS data into the system, confirm it looks correct with the kmldump utility, and then run queries on the data 
-using (UTILITIES YET TO BE DESIGNED).
+using the routesearch utility.
+
+More information on tools and their options can be found on the profilerouting wiki page.
