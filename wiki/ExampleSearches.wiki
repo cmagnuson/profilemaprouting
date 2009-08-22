@@ -2,7 +2,7 @@
 
 = Routing with no user data: =
 
-Example 1:
+Example 1 (5th to St. Mary's):
 <a href="http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=115603110553644919844.000471c2bbcaec0306b80">Map</a>
 
 {{{
@@ -27,7 +27,7 @@ University Ave SE | 1.80682032092 | 3.78611280605
 St Marys Ave SE | 1.88254621924 | 3.96785496202
 }}}
 
-Example 2:
+Example 2 (St. Mary's to Emerald):
 <a href="http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=115603110553644919844.000471c2c357a15bf2544">Map</a>
 
 {{{
@@ -50,7 +50,7 @@ Emerald St SE | 1.11052040877 | 2.66524898106
 
 = Routing With User Data =
 
-Example 1:
+Example 1 (5th to St. Mary's):
 <a href="http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=115603110553644919844.000471c2b654e1f01fe29">Map</a>
 
 {{{
@@ -75,7 +75,7 @@ University Ave SE | 1.80682032092 | 3.78611280605
 St Marys Ave SE | 1.88254621924 | 4.02298054487
 }}}
 
-Example 2:
+Example 2 (St. Mary's to Emerald):
 <a href="http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=115603110553644919844.000471c2bec0578708f83">Map</a>
 
 {{{
