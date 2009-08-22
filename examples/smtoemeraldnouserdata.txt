@@ -1,14 +1,14 @@
 Road | Cumulative Distance | Cumulative Time
-St Marys Ave SE                                                                                                                                                                                          | 0.0757258983198 | 0.181742155968
-University Ave SE                                                                                                                                                                                        | 0.0866455750923 | 0.207949380221
-University Ave SE                                                                                                                                                                                        | 0.134390936209 | 0.322538246903
-University Ave SE                                                                                                                                                                                        | 0.248705700858 | 0.59689368206
-University Ave SE                                                                                                                                                                                        | 0.307717352914 | 0.738521646992
-University Ave SE                                                                                                                                                                                        | 0.367512808503 | 0.882030740406
-University Ave SE                                                                                                                                                                                        | 0.476205594813 | 1.14289342755
-University Ave SE                                                                                                                                                                                        | 0.491269031727 | 1.17904567614
-University Ave SE                                                                                                                                                                                        | 0.589089568964 | 1.41381496551
-University Ave SE                                                                                                                                                                                        | 0.820538549971 | 1.96929251993
-University Ave SE                                                                                                                                                                                        | 0.857345200196 | 2.05762848047
-University Ave SE                                                                                                                                                                                        | 0.934053200899 | 2.24172768216
-Emerald St SE                                                                                                                                                                                            | 1.11052040877 | 2.66524898106
+St Marys Ave SE | 0.0757258983198 | 0.181742155968
+University Ave SE | 0.0866455750923 | 0.207949380221
+University Ave SE | 0.134390936209 | 0.322538246903
+University Ave SE | 0.248705700858 | 0.59689368206
+University Ave SE | 0.307717352914 | 0.738521646992
+University Ave SE | 0.367512808503 | 0.882030740406
+University Ave SE | 0.476205594813 | 1.14289342755
+University Ave SE | 0.491269031727 | 1.17904567614
+University Ave SE | 0.589089568964 | 1.41381496551
+University Ave SE | 0.820538549971 | 1.96929251993
+University Ave SE | 0.857345200196 | 2.05762848047
+University Ave SE | 0.934053200899 | 2.24172768216
+Emerald St SE | 1.11052040877 | 2.66524898106
