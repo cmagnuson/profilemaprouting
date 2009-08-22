@@ -112,21 +112,23 @@ def main():
         print("All segments committed to database")
 
     #assign matching roadways to unassigned segments
-    pointid=1
     trackid=init_trackid
-    prev_pt = None
-    prev_rd = None
-    prev_class = None
-    for pt in segment.get_points():
-        res = match_with_history(pt, prev_pt, prev_rd, prev_class, pointid, trackid, db)
-        if res==None:
-            prev_rd = None
-            prev_class = None
-        else:
-            prev_rd = res[0]
-            prev_class = res[3]
-        pointid+=1
-        prev_pt = pt
+    for segment in segment_list:
+        pointid=1
+        prev_pt = None
+        prev_rd = None
+        prev_class = None
+        for pt in segment.get_points():
+            res = match_with_history(pt, prev_pt, prev_rd, prev_class, pointid, trackid, db)
+            if res==None:
+                prev_rd = None
+                prev_class = None
+            else:
+                prev_rd = res[0]
+                prev_class = res[3]
+            pointid+=1
+            prev_pt = pt
+        trackid+=1
     
     if options.verbose:
         print("Segments matched to road network data")
@@ -151,7 +153,7 @@ def match_with_history(point, previous_point, previous_roadway, previous_class, 
         results = match(trackid, pointid, parcmaxdi*2/multiplier, 1)
     else:
         results = match(trackid, pointid, parcmaxdi*2/multiplier, previous_roadway)
-        
+            
     weight = []
     for rd in results:
         if rd[1]<parmaxdi:
