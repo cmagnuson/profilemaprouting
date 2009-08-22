@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Folder>
+<Style id="trkStyle"><LineStyle><color>ffff0000</color><width>4</width></LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.233902,44.981052 -93.233757,44.980968 -93.23363,44.980869</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2341508,44.9802012 -93.23363,44.980869</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.234355,44.979925 -93.2341508,44.9802012</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2341508,44.9798403 -93.234355,44.979925</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.232971,44.979358 -93.2341508,44.9798403</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.23159,44.978793 -93.232971,44.979358</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2302197,44.9782567 -93.23159,44.978793</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2271079,44.9770041 -93.228033,44.977402 -93.2302197,44.9782567</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2269839,44.9769473 -93.2271079,44.9770041</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2269839,44.9769473 -93.2266399,44.9767724 -93.2264421,44.9766522 -93.2263103,44.9764854 -93.2262482,44.9763303 -93.2262405,44.9761286 -93.2262624,44.9759334 -93.2263167,44.9758311</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2261767,44.9754673 -93.2262805,44.9755669 -93.226314,44.9756672 -93.2263167,44.9758311</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2236014,44.9743741 -93.224695,44.9748489 -93.2256413,44.9752557 -93.2261767,44.9754673</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2234706,44.9743301 -93.2236014,44.9743741</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2205248,44.9730927 -93.2213041,44.9734876 -93.2227152,44.974023 -93.2234706,44.9743301</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.220001,44.972874 -93.2205248,44.9730927</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.218613,44.972332 -93.220001,44.972874</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.217239,44.97179 -93.217896,44.97205 -93.218613,44.972332</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.217239,44.97179 -93.217697,44.971191</coordinates></LineString></MultiGeometry>
+</Placemark>
+</Folder>
+</kml>

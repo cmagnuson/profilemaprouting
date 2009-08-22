@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Folder>
+<Style id="trkStyle"><LineStyle><color>ffff0000</color><width>4</width></LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.217239,44.97179 -93.217697,44.971191</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2171179,44.971742 -93.217239,44.97179</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2165885,44.971532 -93.2171179,44.971742</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.2153202,44.9710302 -93.2165885,44.971532</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.214668,44.970768 -93.2153202,44.9710302</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.214005,44.970505 -93.214668,44.970768</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.212799,44.970028 -93.214005,44.970505</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.212631,44.969963 -93.212799,44.970028</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.211547,44.969532 -93.212125,44.969762 -93.212631,44.969963</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.208984,44.96851 -93.211547,44.969532</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.208576,44.968348 -93.208984,44.96851</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.207726,44.96801 -93.208576,44.968348</coordinates></LineString></MultiGeometry>
+</Placemark>
+<Placemark>
+<MultiGeometry><LineString><coordinates>-93.207726,44.96801 -93.207733,44.966423</coordinates></LineString></MultiGeometry>
+</Placemark>
+</Folder>
+</kml>
