@@ -66,7 +66,7 @@ def main():
         roadinfo = get_dist(link[0])[0]
         total_distance += float(roadinfo[0])
         total_time += float(roadinfo[1]*60)
-        print(roadinfo[2]+" | "+str(total_distance)+" | "+str(total_time))
+        print(roadinfo[2].strip()+" | "+str(total_distance)+" | "+str(total_time))
         
         kmlfile.write("<Placemark>\n")
         kmlfile.write(link[1])
